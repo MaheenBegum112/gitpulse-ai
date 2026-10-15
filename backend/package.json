@@ -1,0 +1,18 @@
+{
+  "name": "gitpulse-mcp-server",
+  "version": "1.0.0",
+  "description": "GitPulse AI MCP Server — Repository health analysis via Model Context Protocol",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["mcp", "github", "ai", "health-score"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "axios": "^1.20.0"
+  }
+}
