@@ -14,68 +14,99 @@ The platform combines the **Model Context Protocol (MCP)** with **Amazon Bedrock
 
 [![GitPulse AI Demo](YOUR_THUMBNAIL_URL)](YOUR_YOUTUBE_URL)
 
-> Watch the demo to see repository health analysis, predictive insights, MCP tools, repository comparison, and AWS cloud-readiness analysis in action.
 
 ---
 
 ## 🚀 Features
+## FEATURES
 
-### 🧠 Repository Health Analysis
+### For Repository Developers
 
-- Multi-factor **100-point repository health score**
-- Commit frequency and repository activity analysis
-- Contributor diversity and bus-factor analysis
-- Issue and pull-request activity analysis
-- Documentation quality analysis
-- Community engagement analysis
-- Codebase maturity evaluation
+- **Repository Health Analysis**
+  - Comprehensive 100-point repository health score
+  - Analyze commit frequency and development activity
+  - Evaluate contributor diversity and bus-factor risk
+  - Analyze issue management and pull-request activity
+  - Assess documentation quality and repository maturity
 
-### 🔮 Predictive Intelligence
+- **Contributor & Community Insights**
+  - Analyze contributor distribution and activity
+  - Identify repositories dependent on a small number of contributors
+  - Track stars, forks, watchers, and community engagement
+  - Identify repository growth and momentum trends
 
-- Abandonment risk detection
-- Bus-factor risk warnings
-- Repository momentum analysis
-- Contributor activity patterns
-- Optimal contribution timing insights
+- **Predictive Risk Detection**
+  - Detect potential repository abandonment
+  - Identify declining maintenance activity
+  - Flag high bus-factor risk
+  - Analyze repository momentum and activity trends
+  - Identify optimal contributor activity periods
 
-### ☁️ AWS & AI Analysis
+### For Engineering Teams
 
-- AWS Well-Architected **5-Pillar** evaluation
-- Operational Excellence
-- Security
-- Reliability
-- Performance Efficiency
-- Cost Optimization / Sustainability
-- AWS architecture recommendations
-- AI-powered recommendations using Amazon Bedrock
-- Interactive AI architecture advisor
+- **Repository Comparison**
+  - Compare two GitHub repositories side-by-side
+  - Compare health scores and development activity
+  - Compare contributor and community metrics
+  - Compare languages and repository maturity
+  - Identify strengths and weaknesses between repositories
 
-### ⚡ MCP Integration
+- **AI-Powered Engineering Insights**
+  - Generate actionable repository recommendations
+  - Use Amazon Bedrock for AI-powered analysis
+  - Ask AI-based architectural and engineering questions
+  - Generate contextual recommendations based on repository data
 
-- Model Context Protocol (MCP) server
-- Stdio transport
-- HTTP/JSON-RPC 2.0 gateway
-- In-app MCP protocol inspector
-- Real-time tool and JSON-RPC payload inspection
-- Compatible with MCP-enabled AI environments
+### For Cloud & AWS Teams
 
-### 🆚 Repository Comparison
+- **AWS Well-Architected Analysis**
+  - Evaluate repositories across the AWS Well-Architected pillars
+  - Analyze Operational Excellence
+  - Analyze Security
+  - Analyze Reliability
+  - Analyze Performance Efficiency
+  - Analyze Cost Optimization and Sustainability
 
-Compare two GitHub repositories side-by-side based on:
+- **Cloud Architecture Recommendations**
+  - Recommend suitable AWS deployment architectures
+  - Provide cloud-readiness insights
+  - Identify potential architecture improvements
+  - Generate AI-powered AWS recommendations using Amazon Bedrock
 
-- Repository health
-- Contributors
-- Languages
-- Activity
-- Community metrics
-- Overall project maturity
+### For AI & MCP Integration
 
-### 📋 Shareable Reports
+- **Model Context Protocol (MCP)**
+  - MCP server for repository intelligence
+  - Stdio transport for MCP-compatible desktop environments
+  - HTTP/JSON-RPC 2.0 gateway
+  - Expose repository analysis capabilities as MCP tools
+  - Inspect MCP requests and responses through the in-app inspector
 
-- Generate repository analysis reports
-- Export reports as Markdown
-- Copy executive summaries
-- Share analysis results easily
+- **MCP Repository Tools**
+  - `analyze-repo-health` for complete repository analysis
+  - `get-repo-languages` for language distribution
+  - `get-contributor-stats` for contributor and bus-factor analysis
+  - `compare-repos` for repository benchmarking
+  - `aws-well-architected-audit` for AWS cloud-readiness analysis
+
+### Reporting & Insights
+
+- **Shareable Reports**
+  - Generate repository analysis reports
+  - Export analysis results as Markdown
+  - Copy executive summaries
+  - Share repository health and engineering insights
+
+- **Interactive Analytics Dashboard**
+  - Visualize repository health metrics
+  - Display contributor activity
+  - Show repository activity trends
+  - Interactive charts and health indicators
+  - Dynamic repository analysis results
+
+
+
+
 
 ---
 
@@ -159,4 +190,36 @@ AWS_ACCESS_KEY_ID=your_aws_access_key
 AWS_SECRET_ACCESS_KEY=your_aws_secret_key
 
 AWS_REGION=your_aws_region
+```
+### PROJECT STRUCTURE
+``` bash
+gitpusle-ai/
+│
+├── frontend/
+│   ├── public/
+│   │
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   ├── assets/
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   │
+│   ├── package.json
+│   ├── vite.config.js
+│   └── ...
+│
+├── backend/
+│   ├── src/
+│   │   ├── tools/
+│   │   ├── services/
+│   │   ├── routes/
+│   │   └── ...
+│   │
+│   ├── package.json
+│   └── ...
+│
+├── README.md
+└── LICENSE
 ```
