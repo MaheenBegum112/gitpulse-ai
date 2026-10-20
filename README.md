@@ -129,3 +129,34 @@ Make sure you have installed:
 git clone https://github.com/MaheenBegum112/gitpusle-ai.git
 
 cd gitpusle-ai
+```
+### Install Frontend Dependencies
+```bash
+cd frontend
+npm install
+```
+### Start the Frontend
+```bash
+npm run dev
+```
+### Install Backend Dependencies
+```bash
+cd backend
+npm install
+```
+### Start the Backend
+```bash
+npm start
+```
+### 🔐 Environment Variables
+
+Create a .env file inside the backend directory.
+```bash
+GITHUB_TOKEN=your_github_token
+
+AWS_ACCESS_KEY_ID=your_aws_access_key
+
+AWS_SECRET_ACCESS_KEY=your_aws_secret_key
+
+AWS_REGION=your_aws_region
+```
