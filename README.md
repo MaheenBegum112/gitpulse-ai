@@ -125,64 +125,7 @@ Make sure you have installed:
 
 ### 1. Clone the repository
 
+```bash
 git clone https://github.com/MaheenBegum112/gitpusle-ai.git
 
 cd gitpusle-ai
-2. Install Frontend Dependencies
-cd frontend
-npm install
-3. Start the Frontend
-npm run dev
-
-The frontend will run at:
-
-http://localhost:5173
-4. Install Backend Dependencies
-
-Open a new terminal:
-
-cd backend
-npm install
-5. Start the Backend
-npm start
-gitpusle-ai/
-│
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   └── ...
-│   │
-│   ├── package.json
-│   └── ...
-│
-├── backend/
-│   ├── src/
-│   │   ├── tools/
-│   │   ├── services/
-│   │   ├── routes/
-│   │   └── ...
-│   │
-│   ├── package.json
-│   └── ...
-│
-├── README.md
-└── LICENSE
-🔐 Environment Variables
-
-Create a .env file inside the backend directory
-GITHUB_TOKEN=your_github_token
-AWS_ACCESS_KEY_ID=your_aws_access_key
-AWS_SECRET_ACCESS_KEY=your_aws_secret_key
-AWS_REGION=your_aws_region
-
-🏆 Highlights
-AI-powered GitHub repository intelligence
-Model Context Protocol integration
-Amazon Bedrock integration
-Predictive repository risk analysis
-AWS Well-Architected cloud-readiness analysis
-Repository benchmarking and comparison
-Interactive MCP inspection
-Modern React-based dashboard
