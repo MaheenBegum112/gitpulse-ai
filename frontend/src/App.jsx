@@ -8,7 +8,7 @@ import HomeView from './components/Home';
 import ReportView from './components/ReportView';
 import CompareView from './components/CompareView';
 import McpInspector from './components/McpInspector';
-import './App.css';
+
 
 function App() {
   const navigate = useNavigate();

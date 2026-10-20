@@ -1,17 +1,23 @@
 import { useState, useEffect, useRef } from 'react';
 
 /**
- * Animated SVG ring that fills to the given score with color transitions.
+ * Animated SVG ring that fills to the given score.
  */
-export default function HealthScoreRing({ score = 0, grade = '?', size = 200, strokeWidth = 10 }) {
+export default function HealthScoreRing({
+  score = 0,
+  grade = '?',
+  size = 200,
+  strokeWidth = 10,
+}) {
   const [displayed, setDisplayed] = useState(0);
   const animRef = useRef(null);
 
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (displayed / 100) * circumference;
+  const offset =
+    circumference - (displayed / 100) * circumference;
 
-  // Animate the number counting up
+  // Animate score
   useEffect(() => {
     let start = null;
     const duration = 1400;
@@ -20,14 +26,30 @@ export default function HealthScoreRing({ score = 0, grade = '?', size = 200, st
 
     function step(ts) {
       if (!start) start = ts;
-      const progress = Math.min((ts - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
-      setDisplayed(Math.round(from + (to - from) * eased));
-      if (progress < 1) animRef.current = requestAnimationFrame(step);
+
+      const progress = Math.min(
+        (ts - start) / duration,
+        1
+      );
+
+      const eased =
+        1 - Math.pow(1 - progress, 3);
+
+      setDisplayed(
+        Math.round(from + (to - from) * eased)
+      );
+
+      if (progress < 1) {
+        animRef.current =
+          requestAnimationFrame(step);
+      }
     }
 
-    animRef.current = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(animRef.current);
+    animRef.current =
+      requestAnimationFrame(step);
+
+    return () =>
+      cancelAnimationFrame(animRef.current);
   }, [score]);
 
   const getColor = (s) => {
@@ -37,26 +59,69 @@ export default function HealthScoreRing({ score = 0, grade = '?', size = 200, st
     return '#ef4444';
   };
 
-  const getGradientId = 'scoreGrad';
   const color = getColor(score);
 
   const gradeColors = {
-    'A+': '#10b981', A: '#10b981', 'A-': '#34d399',
-    'B+': '#f59e0b', B: '#f59e0b', 'B-': '#fbbf24',
-    'C+': '#f97316', C: '#f97316', 'C-': '#fb923c',
-    D: '#ef4444', F: '#ef4444',
+    'A+': '#10b981',
+    A: '#10b981',
+    'A-': '#34d399',
+
+    'B+': '#f59e0b',
+    B: '#f59e0b',
+    'B-': '#fbbf24',
+
+    'C+': '#f97316',
+    C: '#f97316',
+    'C-': '#fb923c',
+
+    D: '#ef4444',
+    F: '#ef4444',
   };
 
+  const gradientId = 'scoreGrad';
+
   return (
-    <div style={{ position: 'relative', width: size, height: size, flexShrink: 0 }}>
-      <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
+    <div
+      className="relative flex shrink-0 items-center justify-center"
+      style={{
+        width: size,
+        height: size,
+      }}
+    >
+      <svg
+        width={size}
+        height={size}
+        className="-rotate-90"
+      >
         <defs>
-          <linearGradient id={getGradientId} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor={color} />
-            <stop offset="100%" stopColor={score >= 80 ? '#6366f1' : color} />
+          <linearGradient
+            id={gradientId}
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="100%"
+          >
+            <stop
+              offset="0%"
+              stopColor={color}
+            />
+
+            <stop
+              offset="100%"
+              stopColor={
+                score >= 80
+                  ? '#3b82f6'
+                  : color
+              }
+            />
           </linearGradient>
+
           <filter id="ringGlow">
-            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feGaussianBlur
+              stdDeviation="3"
+              result="blur"
+            />
+
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
@@ -64,64 +129,70 @@ export default function HealthScoreRing({ score = 0, grade = '?', size = 200, st
           </filter>
         </defs>
 
-        {/* Background track */}
+        {/* Background Track */}
         <circle
-          cx={size / 2} cy={size / 2} r={radius}
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
           fill="none"
-          stroke="rgba(99,102,241,0.08)"
+          stroke="#e5e7eb"
           strokeWidth={strokeWidth}
         />
 
-        {/* Animated fill ring */}
+        {/* Animated Score Ring */}
         <circle
-          cx={size / 2} cy={size / 2} r={radius}
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
           fill="none"
-          stroke={`url(#${getGradientId})`}
+          stroke={`url(#${gradientId})`}
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={offset}
           filter="url(#ringGlow)"
-          style={{ transition: 'stroke-dashoffset 1.4s cubic-bezier(0.16,1,0.3,1)' }}
+          className="transition-all duration-1000 ease-out"
         />
       </svg>
 
-      {/* Center content */}
-      <div style={{
-        position: 'absolute', inset: 0,
-        display: 'flex', flexDirection: 'column',
-        alignItems: 'center', justifyContent: 'center',
-      }}>
-        <span style={{
-          fontFamily: 'var(--font-heading)',
-          fontSize: size * 0.24,
-          fontWeight: 700,
-          color: 'var(--text-bright)',
-          lineHeight: 1,
-        }}>
+      {/* Center Content */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+
+        {/* Score */}
+        <span
+          className="font-extrabold leading-none text-slate-900"
+          style={{
+            fontSize: size * 0.24,
+          }}
+        >
           {displayed}
         </span>
-        <span style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: size * 0.09,
-          color: 'var(--text-muted)',
-          marginTop: 2,
-        }}>
+
+        {/* /100 */}
+        <span
+          className="mt-1 font-mono font-medium text-slate-500"
+          style={{
+            fontSize: size * 0.09,
+          }}
+        >
           / 100
         </span>
-        <span style={{
-          marginTop: 6,
-          fontFamily: 'var(--font-heading)',
-          fontSize: size * 0.13,
-          fontWeight: 700,
-          color: gradeColors[grade] || 'var(--text-secondary)',
-          background: 'rgba(0,0,0,0.3)',
-          padding: '2px 10px',
-          borderRadius: 'var(--radius-sm)',
-          letterSpacing: '0.05em',
-        }}>
+
+        {/* Grade */}
+        <span
+          className="mt-2 rounded-md border px-2.5 py-0.5 font-bold tracking-wider"
+          style={{
+            fontSize: size * 0.12,
+            color:
+              gradeColors[grade] || '#3b82f6',
+            backgroundColor: '#f8fafc',
+            borderColor:
+              gradeColors[grade] || '#3b82f6',
+          }}
+        >
           {grade}
         </span>
+
       </div>
     </div>
   );

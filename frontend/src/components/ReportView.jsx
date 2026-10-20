@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import AnimatedBackground from './AnimatedBackground';
 import HealthScoreRing from './HealthScoreRing';
 import CommitHeatmap from './CommitHeatmap';
 import ContributorChart from './ContributorChart';
@@ -26,72 +25,48 @@ export default function ReportView({
   onAnalyze,
   onOpenMcpInspector,
 }) {
-  const [activeTab, setActiveTab] = useState('health'); // 'health' | 'bedrock' | 'logs'
+  const [activeTab, setActiveTab] = useState('health');
 
-  // Loading State
+  // =========================================================
+  // LOADING STATE
+  // =========================================================
+
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', position: 'relative' }}>
-        <AnimatedBackground />
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          {/* Loading header */}
-          <div style={{ maxWidth: 1040, margin: '0 auto', padding: '40px 24px 0' }}>
+      <div className="relative min-h-screen overflow-hidden bg-white text-slate-900">
+
+        {/* Blue background glow */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 left-1/2 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-blue-100/70 blur-[130px]" />
+          <div className="absolute -bottom-40 left-1/2 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-cyan-100/60 blur-[130px]" />
+        </div>
+
+        <div className="relative z-10">
+          <div className="mx-auto max-w-5xl px-6 pt-10">
+
             <button
               onClick={onBack}
-              style={{
-                background: 'var(--bg-card)',
-                border: '1px solid var(--border)',
-                color: 'var(--text-primary)',
-                padding: '8px 16px',
-                borderRadius: 'var(--radius-sm)',
-                cursor: 'pointer',
-                fontSize: 13,
-                fontFamily: 'var(--font-sans)',
-                marginBottom: 24,
-              }}
+              className="mb-6 cursor-pointer rounded-lg border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-600 shadow-sm transition-all hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600"
             >
               ← Back
             </button>
 
-            <div style={{ textAlign: 'center', marginBottom: 32 }}>
-              <div
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 12,
-                  padding: '10px 24px',
-                  background: 'rgba(99,102,241,0.06)',
-                  border: '1px solid var(--border)',
-                  borderRadius: 'var(--radius-full)',
-                }}
-              >
-                <div
-                  style={{
-                    width: 16,
-                    height: 16,
-                    border: '2px solid var(--accent-indigo)',
-                    borderTopColor: 'transparent',
-                    borderRadius: '50%',
-                    animation: 'spin 0.8s linear infinite',
-                  }}
-                />
-                <span
-                  style={{
-                    fontSize: 14,
-                    color: 'var(--text-secondary)',
-                    fontFamily: 'var(--font-mono)',
-                  }}
-                >
+            <div className="mb-8 text-center">
+
+              <div className="inline-flex items-center gap-3 rounded-full border border-blue-200 bg-blue-50 px-6 py-2.5 shadow-sm">
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
+
+                <span className="font-mono text-xs font-medium text-blue-600 sm:text-sm">
                   Analyzing {targetRepo} via MCP & Amazon Bedrock pipeline...
                 </span>
               </div>
+
             </div>
           </div>
 
           <SkeletonLoader />
 
-          {/* Show terminal logs during loading */}
-          <div style={{ maxWidth: 1040, margin: '0 auto', padding: '0 24px 40px' }}>
+          <div className="mx-auto max-w-5xl px-6 pb-12">
             <TerminalLogs logs={logs} />
           </div>
         </div>
@@ -99,136 +74,110 @@ export default function ReportView({
     );
   }
 
-  // Graceful Empty State (e.g. direct load or no repo selected)
+  // =========================================================
+  // EMPTY STATE
+  // =========================================================
+
   if (!data) {
     return (
-      <div style={{ minHeight: '100vh', position: 'relative' }}>
-        <AnimatedBackground />
-        <div
-          style={{
-            position: 'relative',
-            zIndex: 1,
-            maxWidth: 680,
-            margin: '0 auto',
-            padding: '80px 24px',
-            textAlign: 'center',
-          }}
-        >
-          <div style={{ fontSize: 48, marginBottom: 16 }}>🔍</div>
-          <h2 style={{ fontSize: 24, marginBottom: 12, color: 'var(--text-bright)' }}>
+      <div className="relative min-h-screen overflow-hidden bg-white text-slate-900">
+
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 left-1/2 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-blue-100/70 blur-[130px]" />
+        </div>
+
+        <div className="relative z-10 mx-auto max-w-2xl px-6 py-24 text-center">
+
+          <div className="mb-4 text-5xl">🔍</div>
+
+          <h2 className="mb-3 text-2xl font-bold text-slate-900">
             No Analysis Selected
           </h2>
-          <p style={{ color: 'var(--text-secondary)', marginBottom: 28, lineHeight: 1.6 }}>
-            Select a repository from our popular benchmarks or return home to search for any public GitHub project.
+
+          <p className="mb-8 text-sm leading-relaxed text-slate-500">
+            Select a repository from our popular benchmarks or return home to
+            search for any public GitHub project.
           </p>
 
-          <div style={{ display: 'flex', justifyContent: 'center', gap: 10, flexWrap: 'wrap', marginBottom: 32 }}>
+          <div className="mb-8 flex flex-wrap justify-center gap-2.5">
+
             {POPULAR_REPOS.map((r) => (
               <button
                 key={r.value}
                 onClick={() => onAnalyze && onAnalyze(r.value)}
-                style={{
-                  background: 'var(--bg-card)',
-                  border: '1px solid var(--border)',
-                  color: 'var(--text-bright)',
-                  padding: '8px 16px',
-                  borderRadius: 'var(--radius-full)',
-                  cursor: 'pointer',
-                  fontSize: 13,
-                  transition: 'border-color 0.2s ease',
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--accent-indigo)')}
-                onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border)')}
+                className="cursor-pointer rounded-full border border-blue-100 bg-blue-50 px-4 py-2 text-xs font-medium text-blue-600 transition-all hover:border-blue-300 hover:bg-blue-100"
               >
                 ⚡ {r.label}
               </button>
             ))}
+
           </div>
 
           <button
             onClick={onBack}
-            style={{
-              background: 'var(--gradient-primary)',
-              border: 'none',
-              color: '#fff',
-              padding: '12px 28px',
-              borderRadius: 'var(--radius-sm)',
-              fontWeight: 600,
-              cursor: 'pointer',
-            }}
+            className="cursor-pointer rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 transition-all hover:scale-[1.01]"
           >
             ← Back to Search
           </button>
+
         </div>
       </div>
     );
   }
 
-  const { healthScore, grade, factors, predictions, auditData, rawData } = data;
+  const {
+    healthScore,
+    grade,
+    factors,
+    predictions,
+    auditData,
+    rawData,
+  } = data;
+
+  // =========================================================
+  // MAIN REPORT
+  // =========================================================
 
   return (
-    <div style={{ minHeight: '100vh', position: 'relative' }}>
-      <AnimatedBackground />
+    <div className="relative min-h-screen overflow-hidden bg-white text-slate-900">
 
-      <div
-        style={{
-          position: 'relative',
-          zIndex: 1,
-          maxWidth: 1040,
-          margin: '0 auto',
-          padding: '40px 24px 60px',
-        }}
-      >
-        {/* Top bar */}
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: 32,
-            flexWrap: 'wrap',
-            gap: 12,
-            animation: 'fadeInUp 0.4s ease both',
-          }}
-        >
+      {/* ===================================================== */}
+      {/* BLUE BACKGROUND GLOW */}
+      {/* ===================================================== */}
+
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+
+        <div className="absolute -top-48 left-1/2 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-blue-100/60 blur-[140px]" />
+
+        <div className="absolute -right-64 top-[35%] h-[500px] w-[500px] rounded-full bg-cyan-100/50 blur-[140px]" />
+
+        <div className="absolute -left-64 bottom-[10%] h-[500px] w-[500px] rounded-full bg-blue-100/50 blur-[140px]" />
+
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-5xl px-6 pb-16 pt-10">
+
+        {/* ===================================================== */}
+        {/* TOP BAR */}
+        {/* ===================================================== */}
+
+        <div className="mb-8 flex flex-wrap items-center justify-between gap-3">
+
           <button
             onClick={onBack}
-            style={{
-              background: 'var(--bg-card)',
-              border: '1px solid var(--border)',
-              color: 'var(--text-primary)',
-              padding: '8px 16px',
-              borderRadius: 'var(--radius-sm)',
-              cursor: 'pointer',
-              fontSize: 13,
-              fontFamily: 'var(--font-sans)',
-              transition: 'border-color 0.2s ease',
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--border-hover)')}
-            onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border)')}
+            className="cursor-pointer rounded-lg border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-600 shadow-sm transition-all hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600"
           >
             ← Back to Search
           </button>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div className="flex items-center gap-3">
+
             <button
               onClick={onOpenMcpInspector}
-              style={{
-                background: 'rgba(99,102,241,0.1)',
-                border: '1px solid rgba(99,102,241,0.25)',
-                color: 'var(--accent-indigo)',
-                padding: '8px 14px',
-                borderRadius: 'var(--radius-sm)',
-                cursor: 'pointer',
-                fontSize: 12,
-                fontWeight: 600,
-                fontFamily: 'var(--font-mono)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
-              }}
+              className="flex cursor-pointer items-center gap-1.5 rounded-lg border border-blue-200 bg-blue-50 px-3.5 py-2 font-mono text-xs font-semibold text-blue-600 shadow-sm transition-all hover:border-blue-400 hover:bg-blue-100 hover:text-blue-700"
             >
-              <span>⚡</span> MCP Inspector
+              <span>⚡</span>
+              MCP Inspector
             </button>
 
             <ExportButton
@@ -239,266 +188,308 @@ export default function ReportView({
               predictions={predictions}
               repoInfo={rawData?.repoInfo}
             />
+
           </div>
         </div>
 
-        {/* Report header */}
-        <div
-          style={{
-            marginBottom: 28,
-            animation: 'fadeInUp 0.4s ease 0.1s both',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginBottom: 6 }}>
-            <h1 style={{ margin: 0 }}>
-              <span className="gradient-text">{targetRepo}</span>
+        {/* ===================================================== */}
+        {/* REPORT HEADER */}
+        {/* ===================================================== */}
+
+        <div className="mb-8">
+
+          <div className="mb-2 flex flex-wrap items-center gap-3">
+
+            <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
+
+              <span className="bg-gradient-to-r from-blue-500 via-blue-600 to-cyan-500 bg-clip-text text-transparent">
+                {targetRepo}
+              </span>
+
             </h1>
+
             <span
-              style={{
-                padding: '4px 10px',
-                borderRadius: 'var(--radius-full)',
-                fontSize: 12,
-                fontFamily: 'var(--font-mono)',
-                background: healthScore >= 80 ? 'rgba(16,185,129,0.12)' : healthScore >= 60 ? 'rgba(99,102,241,0.12)' : 'rgba(239,68,68,0.12)',
-                color: healthScore >= 80 ? '#10b981' : healthScore >= 60 ? '#818cf8' : '#ef4444',
-                border: `1px solid ${healthScore >= 80 ? '#10b981' : healthScore >= 60 ? '#818cf8' : '#ef4444'}40`,
-              }}
+              className={`rounded-full border px-3 py-1 font-mono text-xs font-bold ${
+                healthScore >= 80
+                  ? 'border-emerald-200 bg-emerald-50 text-emerald-600'
+                  : healthScore >= 60
+                  ? 'border-blue-200 bg-blue-50 text-blue-600'
+                  : 'border-rose-200 bg-rose-50 text-rose-600'
+              }`}
             >
               Grade {grade} ({healthScore}/100)
             </span>
+
           </div>
 
-          <p
-            style={{
-              color: 'var(--text-muted)',
-              fontSize: 13,
-              fontFamily: 'var(--font-mono)',
-              margin: '4px 0 0',
-            }}
-          >
+          <p className="font-mono text-xs text-slate-400">
             Model Context Protocol Pipeline • Amazon Bedrock Architecture Auditor
           </p>
+
           {rawData?.repoInfo?.description && (
-            <p
-              style={{
-                color: 'var(--text-secondary)',
-                fontSize: 14,
-                marginTop: 10,
-                maxWidth: 720,
-                lineHeight: 1.5,
-              }}
-            >
+            <p className="mt-2.5 max-w-3xl text-sm leading-relaxed text-slate-500">
               {rawData.repoInfo.description}
             </p>
           )}
+
         </div>
 
-        {/* Navigation Tabs */}
-        <div
-          style={{
-            display: 'flex',
-            gap: 8,
-            marginBottom: 28,
-            borderBottom: '1px solid var(--border)',
-            paddingBottom: 4,
-          }}
-        >
+        {/* ===================================================== */}
+        {/* NAVIGATION TABS */}
+        {/* ===================================================== */}
+
+        <div className="mb-8 flex gap-2 overflow-x-auto border-b border-blue-100 pb-1">
+
           {[
-            { id: 'health', label: '📊 Health & Analytics', icon: '📊' },
-            { id: 'bedrock', label: '☁️ Amazon Bedrock & AWS Audit', icon: '☁️' },
-            { id: 'logs', label: '📟 MCP Server Telemetry', icon: '📟' },
+            {
+              id: 'health',
+              label: '📊 Health & Analytics',
+            },
+            {
+              id: 'bedrock',
+              label: '☁️ Amazon Bedrock & AWS Audit',
+            },
+            {
+              id: 'logs',
+              label: '📟 MCP Server Telemetry',
+            },
           ].map((tab) => (
+
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              style={{
-                padding: '10px 18px',
-                background: activeTab === tab.id ? 'rgba(99,102,241,0.12)' : 'transparent',
-                border: 'none',
-                borderBottom: activeTab === tab.id ? '2px solid var(--accent-indigo)' : '2px solid transparent',
-                borderRadius: 'var(--radius-sm) var(--radius-sm) 0 0',
-                color: activeTab === tab.id ? 'var(--text-bright)' : 'var(--text-secondary)',
-                fontSize: 13,
-                fontWeight: 600,
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-              }}
+              className={`cursor-pointer whitespace-nowrap rounded-t-lg px-4 py-2.5 text-xs font-semibold transition-all sm:text-sm ${
+                activeTab === tab.id
+                  ? 'border-b-2 border-blue-500 bg-blue-50 text-blue-600'
+                  : 'text-slate-400 hover:bg-blue-50/50 hover:text-blue-600'
+              }`}
             >
               {tab.label}
             </button>
+
           ))}
+
         </div>
 
-        {/* ── TAB 1: HEALTH & ANALYTICS ─────────────────────── */}
-        {activeTab === 'health' && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-            {/* Health Score + Factor Breakdown */}
-            <div
-              className="glass-card-static"
-              style={{
-                padding: 32,
-                display: 'flex',
-                gap: 40,
-                alignItems: 'center',
-                flexWrap: 'wrap',
-                animation: 'fadeInUp 0.4s ease both',
-              }}
-            >
-              <HealthScoreRing score={healthScore} grade={grade} size={200} strokeWidth={10} />
+        {/* ===================================================== */}
+        {/* HEALTH TAB */}
+        {/* ===================================================== */}
 
-              <div style={{ flex: 1, minWidth: 280 }}>
-                <h3 style={{ marginBottom: 16, fontSize: 18 }}>Health Score Breakdown</h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        {activeTab === 'health' && (
+          <div className="flex flex-col gap-6">
+
+            {/* Health Score + Factor Breakdown */}
+
+            <div className="flex flex-wrap items-center gap-8 rounded-2xl border border-blue-100 bg-white p-8 shadow-xl shadow-blue-100/40">
+
+              <HealthScoreRing
+                score={healthScore}
+                grade={grade}
+                size={200}
+                strokeWidth={10}
+              />
+
+              <div className="min-w-[280px] flex-1">
+
+                <h3 className="mb-4 text-base font-bold text-slate-900 sm:text-lg">
+                  Health Score Breakdown
+                </h3>
+
+                <div className="flex flex-col gap-3">
+
                   {factors &&
-                    Object.values(factors).map((f, i) => (
-                      <div key={f.label} style={{ animation: `fadeInUp 0.3s ease ${i * 40}ms both` }}>
-                        <div
-                          style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            marginBottom: 4,
-                          }}
-                        >
-                          <span style={{ fontSize: 13, color: 'var(--text-primary)' }}>
+                    Object.values(factors).map((f) => (
+
+                      <div key={f.label}>
+
+                        <div className="mb-1 flex justify-between text-xs font-medium">
+
+                          <span className="text-slate-700">
                             {f.icon} {f.label}
                           </span>
+
                           <span
-                            style={{
-                              fontSize: 12,
-                              fontFamily: 'var(--font-mono)',
-                              color: f.score >= 75 ? '#10b981' : f.score >= 50 ? '#f59e0b' : '#ef4444',
-                              fontWeight: 600,
-                            }}
+                            className={`font-mono font-bold ${
+                              f.score >= 75
+                                ? 'text-emerald-500'
+                                : f.score >= 50
+                                ? 'text-amber-500'
+                                : 'text-rose-500'
+                            }`}
                           >
                             {f.score}
                           </span>
+
                         </div>
-                        <div
-                          style={{
-                            height: 5,
-                            borderRadius: 3,
-                            background: 'rgba(99,102,241,0.08)',
-                            overflow: 'hidden',
-                          }}
-                        >
+
+                        <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
+
                           <div
+                            className={`h-full rounded-full transition-all duration-700 ${
+                              f.score >= 75
+                                ? 'bg-gradient-to-r from-emerald-400 to-cyan-500'
+                                : f.score >= 50
+                                ? 'bg-gradient-to-r from-amber-400 to-orange-500'
+                                : 'bg-gradient-to-r from-rose-500 to-orange-500'
+                            }`}
                             style={{
-                              height: '100%',
-                              borderRadius: 3,
                               width: `${f.score}%`,
-                              background:
-                                f.score >= 75
-                                  ? 'linear-gradient(90deg, #10b981, #6366f1)'
-                                  : f.score >= 50
-                                  ? 'linear-gradient(90deg, #f59e0b, #f97316)'
-                                  : 'linear-gradient(90deg, #ef4444, #f97316)',
-                              transition: 'width 0.8s cubic-bezier(0.16,1,0.3,1)',
                             }}
                           />
+
                         </div>
-                        <span
-                          style={{
-                            fontSize: 11,
-                            color: 'var(--text-muted)',
-                            fontFamily: 'var(--font-mono)',
-                          }}
-                        >
+
+                        <span className="font-mono text-[11px] text-slate-400">
                           {f.detail}
                         </span>
+
                       </div>
+
                     ))}
+
                 </div>
               </div>
             </div>
 
-            {/* Quick Stats Grid */}
+            {/* ================================================= */}
+            {/* QUICK STATS */}
+            {/* ================================================= */}
+
             {rawData?.repoInfo && (
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
-                  gap: 12,
-                }}
-              >
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
+
                 {[
-                  { label: 'Stars', value: rawData.repoInfo.stargazers_count?.toLocaleString(), icon: '⭐' },
-                  { label: 'Forks', value: rawData.repoInfo.forks_count?.toLocaleString(), icon: '🍴' },
-                  { label: 'Open Issues', value: rawData.repoInfo.open_issues_count?.toLocaleString(), icon: '🐛' },
-                  { label: 'Contributors', value: rawData.contributors?.length, icon: '👥' },
-                  { label: 'Languages', value: Object.keys(rawData.languages || {}).length, icon: '💻' },
-                  { label: 'Releases', value: rawData.releases?.length || 0, icon: '📦' },
+                  {
+                    label: 'Stars',
+                    value: rawData.repoInfo.stargazers_count?.toLocaleString(),
+                    icon: '⭐',
+                  },
+                  {
+                    label: 'Forks',
+                    value: rawData.repoInfo.forks_count?.toLocaleString(),
+                    icon: '🍴',
+                  },
+                  {
+                    label: 'Open Issues',
+                    value: rawData.repoInfo.open_issues_count?.toLocaleString(),
+                    icon: '🐛',
+                  },
+                  {
+                    label: 'Contributors',
+                    value: rawData.contributors?.length,
+                    icon: '👥',
+                  },
+                  {
+                    label: 'Languages',
+                    value: Object.keys(rawData.languages || {}).length,
+                    icon: '💻',
+                  },
+                  {
+                    label: 'Releases',
+                    value: rawData.releases?.length || 0,
+                    icon: '📦',
+                  },
                 ].map((s) => (
+
                   <div
                     key={s.label}
-                    className="glass-card-static"
-                    style={{ padding: '16px 18px', textAlign: 'center' }}
+                    className="flex flex-col items-center justify-center rounded-xl border border-blue-100 bg-white p-4 text-center shadow-sm transition-all hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-md"
                   >
-                    <div style={{ fontSize: 22, marginBottom: 4 }}>{s.icon}</div>
-                    <div
-                      style={{
-                        fontSize: 22,
-                        fontWeight: 700,
-                        fontFamily: 'var(--font-heading)',
-                        color: 'var(--text-bright)',
-                      }}
-                    >
+
+                    <div className="mb-1 text-xl">
+                      {s.icon}
+                    </div>
+
+                    <div className="text-xl font-bold text-slate-900">
                       {s.value}
                     </div>
-                    <div
-                      style={{
-                        fontSize: 11,
-                        color: 'var(--text-muted)',
-                        fontFamily: 'var(--font-mono)',
-                        letterSpacing: '0.04em',
-                      }}
-                    >
+
+                    <div className="font-mono text-[11px] tracking-wider text-slate-400">
                       {s.label}
                     </div>
+
                   </div>
+
                 ))}
+
               </div>
             )}
 
-            {/* Predictive Insights */}
+            {/* ================================================= */}
+            {/* PREDICTIVE INSIGHTS */}
+            {/* ================================================= */}
+
             {predictions?.length > 0 && (
               <div>
-                <h2 style={{ marginBottom: 16, fontSize: 18 }}>
-                  🔮 <span className="gradient-text">Predictive Intelligence</span>
+
+                <h2 className="mb-4 text-lg font-bold text-slate-900">
+
+                  🔮{' '}
+
+                  <span className="bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">
+                    Predictive Intelligence
+                  </span>
+
                 </h2>
+
                 <InsightCards predictions={predictions} />
+
               </div>
             )}
 
-            {/* Visualizations Grid */}
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))',
-                gap: 20,
-              }}
-            >
-              {/* Commit Heatmap */}
-              <div className="glass-card-static" style={{ padding: 24 }}>
-                <h3 style={{ marginBottom: 16, fontSize: 16 }}>📅 Commit Activity (90 days)</h3>
+            {/* ================================================= */}
+            {/* VISUALIZATIONS */}
+            {/* ================================================= */}
+
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+
+              <div className="rounded-xl border border-blue-100 bg-white p-6 shadow-sm">
+
+                <h3 className="mb-4 text-sm font-bold text-slate-900">
+                  📅 Commit Activity (90 days)
+                </h3>
+
                 <CommitHeatmap commits={rawData?.commits || []} />
+
               </div>
 
-              {/* Contributors */}
-              <div className="glass-card-static" style={{ padding: 24 }}>
-                <h3 style={{ marginBottom: 16, fontSize: 16 }}>👥 Top Contributors</h3>
-                <ContributorChart contributors={rawData?.contributors || []} />
+              <div className="rounded-xl border border-blue-100 bg-white p-6 shadow-sm">
+
+                <h3 className="mb-4 text-sm font-bold text-slate-900">
+                  👥 Top Contributors
+                </h3>
+
+                <ContributorChart
+                  contributors={rawData?.contributors || []}
+                />
+
               </div>
+
             </div>
 
-            {/* Language Breakdown */}
-            <div className="glass-card-static" style={{ padding: 24 }}>
-              <h3 style={{ marginBottom: 16, fontSize: 16 }}>💻 Language Breakdown</h3>
-              <LanguageBreakdown languages={rawData?.languages || {}} />
+            {/* ================================================= */}
+            {/* LANGUAGE BREAKDOWN */}
+            {/* ================================================= */}
+
+            <div className="rounded-xl border border-blue-100 bg-white p-6 shadow-sm">
+
+              <h3 className="mb-4 text-sm font-bold text-slate-900">
+                💻 Language Breakdown
+              </h3>
+
+              <LanguageBreakdown
+                languages={rawData?.languages || {}}
+              />
+
             </div>
+
           </div>
         )}
 
-        {/* ── TAB 2: AMAZON BEDROCK & AWS AUDIT ─────────────── */}
+        {/* ===================================================== */}
+        {/* BEDROCK TAB */}
+        {/* ===================================================== */}
+
         {activeTab === 'bedrock' && (
           <AwsBedrockAdvisor
             auditData={auditData}
@@ -507,32 +498,39 @@ export default function ReportView({
           />
         )}
 
-        {/* ── TAB 3: MCP PROTOCOL STREAM ────────────────────── */}
+        {/* ===================================================== */}
+        {/* MCP LOGS TAB */}
+        {/* ===================================================== */}
+
         {activeTab === 'logs' && (
           <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-              <h2 style={{ margin: 0, fontSize: 18 }}>
-                🖥️ <span className="gradient-text">Model Context Protocol Live Stream</span>
+
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+
+              <h2 className="text-lg font-bold text-slate-900">
+
+                🖥️{' '}
+
+                <span className="bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">
+                  Model Context Protocol Live Stream
+                </span>
+
               </h2>
+
               <button
                 onClick={onOpenMcpInspector}
-                style={{
-                  background: 'var(--bg-card)',
-                  border: '1px solid var(--border)',
-                  color: 'var(--accent-indigo)',
-                  padding: '6px 14px',
-                  borderRadius: 'var(--radius-sm)',
-                  cursor: 'pointer',
-                  fontSize: 12,
-                  fontFamily: 'var(--font-mono)',
-                }}
+                className="cursor-pointer rounded-lg border border-blue-200 bg-blue-50 px-3.5 py-1.5 font-mono text-xs font-semibold text-blue-600 transition-all hover:border-blue-400 hover:bg-blue-100"
               >
                 Inspect Tools & JSON-RPC Frames →
               </button>
+
             </div>
+
             <TerminalLogs logs={logs} />
+
           </div>
         )}
+
       </div>
     </div>
   );

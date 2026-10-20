@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 
 /**
- * Horizontal bar chart showing top contributors with animated bars + avatars.
+ * Horizontal bar chart showing top contributors.
  */
 export default function ContributorChart({ contributors = [] }) {
   const [animated, setAnimated] = useState(false);
+
   const top = contributors.slice(0, 10);
   const maxContribs = top[0]?.contributions || 1;
 
@@ -16,67 +17,54 @@ export default function ContributorChart({ contributors = [] }) {
   if (top.length === 0) return null;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+    <div className="flex flex-col gap-3">
       {top.map((c, i) => {
         const pct = (c.contributions / maxContribs) * 100;
+
         return (
           <a
             key={c.login}
             href={c.html_url}
             target="_blank"
             rel="noreferrer"
-            style={{
-              display: 'flex', alignItems: 'center', gap: 12,
-              textDecoration: 'none', color: 'inherit',
-              animation: `fadeInUp 0.4s ease ${i * 60}ms both`,
-            }}
+            className="flex items-center gap-3 transition-opacity hover:opacity-80"
           >
+            {/* Avatar */}
             <img
               src={c.avatar_url}
               alt={c.login}
-              style={{
-                width: 28, height: 28, borderRadius: '50%',
-                border: '2px solid var(--border)',
-                flexShrink: 0,
-              }}
+              className="h-7 w-7 shrink-0 rounded-full border border-blue-200"
             />
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{
-                display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
-                marginBottom: 4,
-              }}>
-                <span style={{
-                  fontSize: 13, fontWeight: 600, color: 'var(--text-primary)',
-                  overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-                  fontFamily: 'var(--font-sans)',
-                }}>
+
+            <div className="min-w-0 flex-1">
+
+              {/* Name + Contributions */}
+              <div className="mb-1 flex items-baseline justify-between">
+                <span className="truncate text-xs font-semibold text-slate-700">
                   {c.login}
                 </span>
-                <span style={{
-                  fontSize: 11, color: 'var(--text-muted)',
-                  fontFamily: 'var(--font-mono)', flexShrink: 0,
-                  marginLeft: 8,
-                }}>
+
+                <span className="ml-2 shrink-0 font-mono text-[11px] text-slate-500">
                   {c.contributions}
                 </span>
               </div>
-              <div style={{
-                width: '100%', height: 6, borderRadius: 3,
-                background: 'rgba(99,102,241,0.08)',
-                overflow: 'hidden',
-              }}>
-                <div style={{
-                  height: '100%',
-                  width: animated ? `${pct}%` : '0%',
-                  borderRadius: 3,
-                  background: i === 0
-                    ? 'linear-gradient(90deg, #6366f1, #a855f7)'
-                    : i < 3
-                      ? 'linear-gradient(90deg, #6366f1, #8b5cf6)'
-                      : 'var(--accent-indigo)',
-                  transition: `width 0.8s cubic-bezier(0.16,1,0.3,1) ${i * 60}ms`,
-                }} />
+
+              {/* Progress bar */}
+              <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
+                <div
+                  className={`h-full rounded-full transition-all duration-700 ${
+                    i === 0
+                      ? 'bg-gradient-to-r from-blue-500 to-cyan-500'
+                      : i < 3
+                      ? 'bg-blue-500'
+                      : 'bg-blue-400'
+                  }`}
+                  style={{
+                    width: animated ? `${pct}%` : '0%',
+                  }}
+                />
               </div>
+
             </div>
           </a>
         );
