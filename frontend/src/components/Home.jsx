@@ -1,399 +1,644 @@
 import { useState } from 'react';
-import AnimatedBackground from './AnimatedBackground';
 
-const POPULAR_REPOS = [
-  { label: 'React', value: 'facebook/react' },
-  { label: 'Vue', value: 'vuejs/core' },
-  { label: 'Next.js', value: 'vercel/next.js' },
-  { label: 'AWS CDK', value: 'aws/aws-cdk' },
-  { label: 'Rust', value: 'rust-lang/rust' },
-  { label: 'VS Code', value: 'microsoft/vscode' },
-];
-
-const FEATURE_CARDS = [
+const FEATURES = [
   {
-    icon: '🧠',
-    title: 'Multi-Factor Health Engine',
-    desc: '7-factor weighted algorithm analyzing commit cadence, issue resolution, PR velocity & bus factor.',
+    icon: '📊',
+    iconBg: 'bg-blue-100',
+    iconColor: 'text-blue-600',
+    title: 'Analyze Your Repository',
+    description:
+      'Get a complete health report for any public GitHub repository. GitPulse AI analyzes development activity, contributors, issues, documentation, and more.',
+    points: [
+      'Repository health score and grade',
+      'Commit and contributor analytics',
+      'Codebase maturity insights',
+    ],
+    button: 'Analyze Repository',
+    buttonColor: 'text-blue-600',
   },
   {
     icon: '☁️',
-    title: 'Amazon Bedrock Architecture Audit',
-    desc: 'AWS Well-Architected 5 Pillars review with automated serverless & container cloud deployment roadmaps.',
-  },
-  {
-    icon: '🔮',
-    title: 'Predictive Intelligence',
-    desc: 'AI-driven abandonment risk detection, maintainer fatigue indicators, and contribution momentum scoring.',
+    iconBg: 'bg-purple-100',
+    iconColor: 'text-purple-600',
+    title: 'AWS Architecture Audit',
+    description:
+      'Understand how ready your repository is for production cloud deployment with an AWS-focused architecture and readiness analysis.',
+    points: [
+      'AWS Well-Architected scorecard',
+      'Cloud deployment recommendations',
+      'Amazon Bedrock architecture insights',
+    ],
+    button: 'Explore AWS Audit',
+    buttonColor: 'text-purple-600',
   },
   {
     icon: '⚡',
-    title: 'Model Context Protocol (MCP)',
-    desc: 'Native JSON-RPC 2.0 tool execution complying with the Anthropic & Linux Foundation MCP standard.',
+    iconBg: 'bg-emerald-100',
+    iconColor: 'text-emerald-600',
+    title: 'MCP-Powered Intelligence',
+    description:
+      'GitPulse AI uses Model Context Protocol to connect repository data with intelligent analysis and provide actionable engineering insights.',
+    points: [
+      'Live MCP server telemetry',
+      'Repository intelligence pipeline',
+      'Interactive AI architecture advisor',
+    ],
+    button: 'View MCP Tools',
+    buttonColor: 'text-emerald-600',
   },
 ];
 
-export default function HomeView({ onAnalyze, history, onQuickSearch, onCompare, onOpenMcpInspector }) {
-  const [inputVal, setInputVal] = useState('');
-  const [focused, setFocused] = useState(false);
+export default function Home({
+  onAnalyze,
+  onOpenMcpInspector,
+}) {
+  const [repo, setRepo] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!inputVal.trim()) return;
-    onAnalyze(inputVal);
+  const handleAnalyze = () => {
+    const value = repo.trim();
+
+    if (!value) return;
+
+    onAnalyze?.(value);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleAnalyze();
+    }
   };
 
   return (
-    <div style={{ minHeight: '100vh', position: 'relative', overflowX: 'hidden' }}>
-      <AnimatedBackground />
+    <div className="min-h-screen bg-white text-slate-900">
 
-      {/* Top Navbar */}
-      <div
-        style={{
-          position: 'relative',
-          zIndex: 10,
-          maxWidth: 1100,
-          margin: '0 auto',
-          padding: '20px 24px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={{ fontSize: 24 }}>⚡</span>
-          <span style={{ fontWeight: 800, fontSize: 18, letterSpacing: '-0.02em', color: 'var(--text-bright)' }}>
-            GitPulse <span style={{ color: 'var(--accent-indigo)' }}>AI</span>
-          </span>
-        </div>
+      {/* ================= HEADER ================= */}
+      <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-md">
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          {/* Logo */}
           <button
-            onClick={onCompare}
-            style={{
-              background: 'var(--bg-card)',
-              border: '1px solid var(--border)',
-              color: 'var(--text-primary)',
-              padding: '8px 14px',
-              borderRadius: 'var(--radius-sm)',
-              fontSize: 12,
-              fontWeight: 600,
-              cursor: 'pointer',
-              transition: 'all 0.2s ease',
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--accent-indigo)')}
-            onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border)')}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="flex items-center gap-3"
           >
-            🆚 Compare Repos
-          </button>
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 text-xl text-white shadow-md">
+              ⚡
+            </div>
 
-          <button
-            onClick={onOpenMcpInspector}
-            style={{
-              background: 'rgba(99,102,241,0.1)',
-              border: '1px solid rgba(99,102,241,0.25)',
-              color: 'var(--accent-indigo)',
-              padding: '8px 14px',
-              borderRadius: 'var(--radius-sm)',
-              fontSize: 12,
-              fontWeight: 600,
-              fontFamily: 'var(--font-mono)',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 6,
-            }}
-          >
-            <span>⚡</span> MCP Inspector
-          </button>
-        </div>
-      </div>
-
-      <div
-        style={{
-          position: 'relative',
-          zIndex: 1,
-          maxWidth: 840,
-          margin: '0 auto',
-          padding: '30px 24px 80px',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        {/* Amazon Hackathon & MCP Badge */}
-        <div
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 8,
-            padding: '6px 16px',
-            background: 'rgba(255,153,0,0.08)',
-            border: '1px solid rgba(255,153,0,0.25)',
-            borderRadius: 'var(--radius-full)',
-            marginBottom: 20,
-            animation: 'fadeInUp 0.5s ease both',
-          }}
-        >
-          <span
-            style={{
-              width: 7,
-              height: 7,
-              borderRadius: '50%',
-              background: '#f59e0b',
-              animation: 'dotPulse 2s ease-in-out infinite',
-            }}
-          />
-          <span
-            style={{
-              fontSize: 11,
-              fontWeight: 700,
-              color: '#f59e0b',
-              fontFamily: 'var(--font-mono)',
-              letterSpacing: '0.05em',
-            }}
-          >
-            AMAZON BEDROCK & MODEL CONTEXT PROTOCOL (MCP)
-          </span>
-        </div>
-
-        {/* Title */}
-        <h1
-          style={{
-            textAlign: 'center',
-            marginBottom: 16,
-            fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
-            letterSpacing: '-0.03em',
-            animation: 'fadeInUp 0.6s ease 0.1s both',
-          }}
-        >
-          Intelligent Codebase Intelligence <br />
-          <span className="gradient-text">& Cloud Architecture</span>
-        </h1>
-
-        <p
-          style={{
-            textAlign: 'center',
-            fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-            color: 'var(--text-secondary)',
-            maxWidth: 620,
-            lineHeight: 1.6,
-            marginBottom: 36,
-            animation: 'fadeInUp 0.6s ease 0.2s both',
-          }}
-        >
-          Instant multi-factor repository health scoring, predictive maintenance risk detection, and{' '}
-          <strong style={{ color: 'var(--text-bright)' }}>AWS Well-Architected Cloud Readiness</strong> audits powered by Amazon Bedrock & Model Context Protocol.
-        </p>
-
-        {/* Search form */}
-        <form
-          onSubmit={handleSubmit}
-          style={{
-            width: '100%',
-            maxWidth: 680,
-            animation: 'fadeInUp 0.6s ease 0.3s both',
-          }}
-        >
-          <div
-            style={{
-              position: 'relative',
-              background: focused ? 'var(--bg-card-hover)' : 'var(--bg-card)',
-              border: `1px solid ${focused ? 'var(--accent-indigo)' : 'var(--border)'}`,
-              borderRadius: 'var(--radius-lg)',
-              padding: '6px',
-              transition: 'all 0.3s ease',
-              boxShadow: focused ? 'var(--shadow-glow-strong)' : 'var(--shadow-md)',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
-              <div
-                style={{
-                  padding: '12px 14px',
-                  color: 'var(--text-muted)',
-                  fontSize: 18,
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                🔍
+            <div>
+              <div className="text-xl font-extrabold tracking-tight text-blue-600">
+                GitPulse AI
               </div>
-              <input
-                type="text"
-                value={inputVal}
-                onChange={(e) => setInputVal(e.target.value)}
-                onFocus={() => setFocused(true)}
-                onBlur={() => setFocused(false)}
-                placeholder="Paste GitHub URL or type owner/repo (e.g. facebook/react)"
-                style={{
-                  flex: 1,
-                  padding: '14px 8px',
-                  fontSize: 15,
-                  fontFamily: 'var(--font-sans)',
-                  background: 'transparent',
-                  color: 'var(--text-bright)',
-                  border: 'none',
-                  outline: 'none',
-                }}
-              />
+              <div className="hidden text-[10px] font-medium tracking-widest text-slate-400 sm:block">
+                REPOSITORY INTELLIGENCE
+              </div>
+            </div>
+          </button>
+
+          {/* Navigation */}
+          <nav className="hidden items-center gap-8 md:flex">
+            <button
+              onClick={() =>
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+              }
+              className="border-b-2 border-blue-600 py-7 text-sm font-semibold text-blue-600"
+            >
+              Home
+            </button>
+
+            <button
+              onClick={() =>
+                document
+                  .getElementById('features')
+                  ?.scrollIntoView({ behavior: 'smooth' })
+              }
+              className="py-7 text-sm font-medium text-slate-600 transition hover:text-blue-600"
+            >
+              Features
+            </button>
+
+            <button
+              onClick={() =>
+                document
+                  .getElementById('how-it-works')
+                  ?.scrollIntoView({ behavior: 'smooth' })
+              }
+              className="py-7 text-sm font-medium text-slate-600 transition hover:text-blue-600"
+            >
+              How It Works
+            </button>
+
+            <button
+              onClick={onOpenMcpInspector}
+              className="py-7 text-sm font-medium text-slate-600 transition hover:text-blue-600"
+            >
+              MCP Inspector
+            </button>
+          </nav>
+
+          {/* Header button */}
+          <button
+            onClick={() =>
+              document
+                .getElementById('analyze')
+                ?.scrollIntoView({ behavior: 'smooth' })
+            }
+            className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition hover:bg-blue-700 hover:shadow-lg"
+          >
+            Analyze Repo →
+          </button>
+        </div>
+      </header>
+
+      {/* ================= HERO ================= */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-white via-blue-50/30 to-white">
+
+        {/* Background decorations */}
+        <div className="pointer-events-none absolute left-[-100px] top-[-100px] h-72 w-72 rounded-full bg-blue-100/50 blur-3xl" />
+        <div className="pointer-events-none absolute right-[-100px] top-20 h-80 w-80 rounded-full bg-purple-100/50 blur-3xl" />
+
+        <div className="relative mx-auto max-w-7xl px-6 pb-20 pt-20">
+
+          <div className="mx-auto max-w-4xl text-center">
+
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-xs font-semibold text-blue-700">
+              <span>⚡</span>
+              AI-POWERED GITHUB REPOSITORY ANALYTICS
+            </div>
+
+            <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+              Understand Your
+              <span className="block bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                Repository Better
+              </span>
+            </h1>
+
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
+              GitPulse AI analyzes GitHub repositories and transforms raw
+              development data into meaningful health scores, predictive
+              insights, AWS architecture recommendations, and AI-powered
+              engineering guidance.
+            </p>
+
+            {/* Repository Search */}
+            <div
+              id="analyze"
+              className="mx-auto mt-9 flex max-w-2xl flex-col gap-3 sm:flex-row"
+            >
+              <div className="relative flex-1">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-lg">
+                  🔗
+                </span>
+
+                <input
+                  value={repo}
+                  onChange={(e) => setRepo(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Enter GitHub repo e.g. facebook/react"
+                  className="h-14 w-full rounded-xl border border-slate-300 bg-white pl-11 pr-4 text-sm text-slate-900 shadow-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                />
+              </div>
+
               <button
-                type="submit"
-                style={{
-                  padding: '12px 24px',
-                  background: 'var(--gradient-primary)',
-                  border: 'none',
-                  borderRadius: 'var(--radius-md)',
-                  color: '#fff',
-                  fontSize: 14,
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  transition: 'opacity 0.2s ease, transform 0.2s ease',
-                  whiteSpace: 'nowrap',
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.9')}
-                onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
+                onClick={handleAnalyze}
+                disabled={!repo.trim()}
+                className="h-14 rounded-xl bg-blue-600 px-7 text-sm font-bold text-white shadow-md transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                Analyze Repo
+                Analyze Repository
               </button>
             </div>
-          </div>
-        </form>
 
-        {/* Popular repos */}
-        <div
-          style={{
-            marginTop: 24,
-            animation: 'fadeInUp 0.6s ease 0.4s both',
-            textAlign: 'center',
-          }}
-        >
-          <span
-            style={{
-              fontSize: 12,
-              color: 'var(--text-muted)',
-              fontFamily: 'var(--font-mono)',
-              letterSpacing: '0.06em',
-              marginRight: 10,
-            }}
-          >
-            POPULAR BENCHMARKS:
-          </span>
-          <div style={{ display: 'inline-flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center', marginTop: 8 }}>
-            {POPULAR_REPOS.map((r) => (
-              <button
-                key={r.value}
-                onClick={() => onAnalyze(r.value)}
-                style={{
-                  padding: '5px 12px',
-                  fontSize: 12,
-                  fontWeight: 500,
-                  fontFamily: 'var(--font-sans)',
-                  background: 'rgba(99,102,241,0.06)',
-                  border: '1px solid var(--border)',
-                  color: 'var(--text-secondary)',
-                  borderRadius: 'var(--radius-full)',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
+            <p className="mt-4 text-xs text-slate-400">
+              Try: facebook/react · vuejs/core · vercel/next.js · aws/aws-cdk
+            </p>
+          </div>
+
+          {/* Stats */}
+          <div className="mx-auto mt-16 grid max-w-4xl grid-cols-2 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm sm:grid-cols-4">
+            <Stat value="8+" label="Health Factors" />
+            <Stat value="5" label="AWS Pillars" />
+            <Stat value="90" label="Days Analytics" />
+            <Stat value="MCP" label="Powered Pipeline" />
+          </div>
+        </div>
+      </section>
+
+      {/* ================= FEATURES ================= */}
+      <section id="features" className="bg-white py-20">
+        <div className="mx-auto max-w-7xl px-6">
+
+          <div className="mb-12 text-center">
+            <p className="mb-2 text-sm font-bold uppercase tracking-wider text-blue-600">
+              What GitPulse AI Does
+            </p>
+
+            <h2 className="text-3xl font-extrabold text-slate-900 sm:text-4xl">
+              Everything you need to understand a repository
+            </h2>
+
+            <p className="mx-auto mt-4 max-w-2xl text-slate-500">
+              From development activity to cloud architecture, get a complete
+              picture of your project's health and future readiness.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            {FEATURES.map((feature) => (
+              <FeatureCard
+                key={feature.title}
+                {...feature}
+                onClick={() => {
+                  if (feature.title.includes('Analyze')) {
+                    document
+                      .getElementById('analyze')
+                      ?.scrollIntoView({ behavior: 'smooth' });
+                  } else if (feature.title.includes('MCP')) {
+                    onOpenMcpInspector?.();
+                  } else {
+                    document
+                      .getElementById('how-it-works')
+                      ?.scrollIntoView({ behavior: 'smooth' });
+                  }
                 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = 'var(--accent-indigo)';
-                  e.currentTarget.style.color = 'var(--accent-indigo)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'var(--border)';
-                  e.currentTarget.style.color = 'var(--text-secondary)';
-                }}
-              >
-                {r.label}
-              </button>
+              />
             ))}
           </div>
         </div>
+      </section>
 
-        {/* Recent searches */}
-        {history.length > 0 && (
-          <div
-            style={{
-              marginTop: 20,
-              animation: 'fadeIn 0.4s ease both',
-              textAlign: 'center',
-            }}
-          >
-            <span
-              style={{
-                fontSize: 11,
-                color: 'var(--text-muted)',
-                fontFamily: 'var(--font-mono)',
-                marginRight: 8,
-              }}
-            >
-              RECENT:
-            </span>
-            <div style={{ display: 'inline-flex', flexWrap: 'wrap', gap: 6 }}>
-              {history.map((item) => (
-                <button
-                  key={item}
-                  onClick={() => onQuickSearch(item)}
-                  style={{
-                    padding: '4px 10px',
-                    fontSize: 11,
-                    fontFamily: 'var(--font-mono)',
-                    background: 'rgba(139,92,246,0.06)',
-                    border: '1px solid rgba(139,92,246,0.15)',
-                    color: 'var(--accent-violet)',
-                    borderRadius: 'var(--radius-full)',
-                    cursor: 'pointer',
-                  }}
-                >
-                  {item}
-                </button>
-              ))}
-            </div>
+      {/* ================= HOW IT WORKS ================= */}
+      <section
+        id="how-it-works"
+        className="border-y border-slate-200 bg-slate-50 py-20"
+      >
+        <div className="mx-auto max-w-7xl px-6">
+
+          <div className="mb-12 text-center">
+            <p className="mb-2 text-sm font-bold uppercase tracking-wider text-blue-600">
+              Simple Workflow
+            </p>
+
+            <h2 className="text-3xl font-extrabold text-slate-900 sm:text-4xl">
+              From GitHub URL to actionable insights
+            </h2>
           </div>
-        )}
 
-        {/* Feature Cards Grid */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-            gap: 16,
-            marginTop: 64,
-            width: '100%',
-            animation: 'fadeInUp 0.6s ease 0.5s both',
-          }}
-        >
-          {FEATURE_CARDS.map((card, i) => (
-            <div
-              key={i}
-              className="glass-card"
-              style={{
-                padding: 22,
-                borderRadius: 'var(--radius-md)',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 8,
-              }}
-            >
-              <div style={{ fontSize: 24 }}>{card.icon}</div>
-              <div style={{ fontWeight: 700, fontSize: 14, color: 'var(--text-bright)' }}>{card.title}</div>
-              <div style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.5 }}>{card.desc}</div>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-4">
+
+            <Step
+              number="01"
+              icon="🔗"
+              title="Connect"
+              text="Enter any public GitHub repository."
+            />
+
+            <Step
+              number="02"
+              icon="⚡"
+              title="MCP Pipeline"
+              text="GitPulse retrieves repository data through MCP tools."
+            />
+
+            <Step
+              number="03"
+              icon="🧠"
+              title="Analyze"
+              text="Health metrics and predictive intelligence are generated."
+            />
+
+            <Step
+              number="04"
+              icon="☁️"
+              title="Improve"
+              text="Get AWS and Bedrock architecture recommendations."
+            />
+
+          </div>
+        </div>
+      </section>
+
+      {/* ================= ANALYTICS PREVIEW ================= */}
+      <section className="bg-white py-20">
+        <div className="mx-auto max-w-7xl px-6">
+
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+
+            <div>
+              <p className="mb-3 text-sm font-bold uppercase tracking-wider text-blue-600">
+                Repository Intelligence
+              </p>
+
+              <h2 className="text-3xl font-extrabold leading-tight text-slate-900 sm:text-4xl">
+                Turn repository activity into a clear health score
+              </h2>
+
+              <p className="mt-5 leading-7 text-slate-600">
+                GitPulse AI evaluates multiple signals from your repository
+                and presents them in an easy-to-understand dashboard.
+              </p>
+
+              <div className="mt-7 space-y-4">
+
+                <Check text="Commit frequency and development momentum" />
+                <Check text="Contributor diversity and project dependency" />
+                <Check text="Issue and pull request management" />
+                <Check text="Documentation and codebase maturity" />
+                <Check text="Community engagement and repository activity" />
+
+              </div>
+
+              <button
+                onClick={() =>
+                  document
+                    .getElementById('analyze')
+                    ?.scrollIntoView({ behavior: 'smooth' })
+                }
+                className="mt-8 rounded-lg bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-blue-700"
+              >
+                Analyze a Repository →
+              </button>
             </div>
-          ))}
+
+            {/* Dashboard mockup */}
+            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xl">
+
+              <div className="mb-5 flex items-center justify-between">
+                <div>
+                  <div className="text-xs text-slate-400">
+                    REPOSITORY HEALTH
+                  </div>
+
+                  <div className="mt-1 text-lg font-bold text-slate-900">
+                    facebook/react
+                  </div>
+                </div>
+
+                <div className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-600">
+                  Grade A
+                </div>
+              </div>
+
+              <div className="flex items-center gap-7">
+
+                <div className="relative flex h-40 w-40 shrink-0 items-center justify-center rounded-full border-[12px] border-blue-100">
+                  <div className="absolute inset-[-12px] rounded-full border-[12px] border-transparent border-r-blue-600 border-t-blue-500 rotate-45" />
+
+                  <div className="text-center">
+                    <div className="text-4xl font-extrabold text-slate-900">
+                      92
+                    </div>
+                    <div className="text-xs text-slate-400">
+                      / 100
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex-1 space-y-4">
+
+                  <ScoreBar
+                    label="Commit Frequency"
+                    value={92}
+                  />
+
+                  <ScoreBar
+                    label="Contributor Diversity"
+                    value={88}
+                  />
+
+                  <ScoreBar
+                    label="Issue Management"
+                    value={95}
+                  />
+
+                  <ScoreBar
+                    label="Documentation"
+                    value={86}
+                  />
+
+                </div>
+              </div>
+
+              <div className="mt-7 grid grid-cols-3 gap-3">
+                <MiniStat value="2.1k" label="Contributors" />
+                <MiniStat value="320k" label="Stars" />
+                <MiniStat value="24k" label="Forks" />
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ================= CTA ================= */}
+      <section className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 py-16">
+        <div className="mx-auto max-w-4xl px-6 text-center text-white">
+
+          <div className="mb-4 text-4xl">⚡</div>
+
+          <h2 className="text-3xl font-extrabold sm:text-4xl">
+            Ready to analyze your repository?
+          </h2>
+
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-blue-100 sm:text-base">
+            Enter a public GitHub repository and let GitPulse AI turn your
+            repository data into meaningful engineering insights.
+          </p>
+
+          <button
+            onClick={() =>
+              document
+                .getElementById('analyze')
+                ?.scrollIntoView({ behavior: 'smooth' })
+            }
+            className="mt-7 rounded-lg bg-white px-7 py-3 text-sm font-bold text-blue-600 shadow-lg transition hover:bg-blue-50"
+          >
+            Analyze Repository →
+          </button>
+
+        </div>
+      </section>
+
+      {/* ================= FOOTER ================= */}
+      <footer className="border-t border-slate-200 bg-white">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-7 sm:flex-row">
+
+          <div className="flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-sm text-white">
+              ⚡
+            </div>
+
+            <span className="font-bold text-slate-800">
+              GitPulse AI
+            </span>
+          </div>
+
+          <p className="text-xs text-slate-400">
+            Powered by Model Context Protocol • Amazon Bedrock Architecture
+          </p>
+
+          <button
+            onClick={onOpenMcpInspector}
+            className="text-xs font-semibold text-blue-600 hover:text-blue-700"
+          >
+            MCP Inspector →
+          </button>
+
+        </div>
+      </footer>
+
+    </div>
+  );
+}
+
+
+/* ============================================================
+   COMPONENTS
+============================================================ */
+
+function Stat({ value, label }) {
+  return (
+    <div className="border-b border-slate-100 p-5 text-center last:border-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
+      <div className="text-2xl font-extrabold text-slate-900">
+        {value}
+      </div>
+
+      <div className="mt-1 text-xs font-medium text-slate-400">
+        {label}
+      </div>
+    </div>
+  );
+}
+
+
+function FeatureCard({
+  icon,
+  iconBg,
+  iconColor,
+  title,
+  description,
+  points,
+  button,
+  buttonColor,
+  onClick,
+}) {
+  return (
+    <div className="group flex min-h-[430px] flex-col rounded-xl border border-slate-200 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+
+      <div
+        className={`mb-7 flex h-14 w-14 items-center justify-center rounded-xl ${iconBg} text-2xl ${iconColor}`}
+      >
+        {icon}
+      </div>
+
+      <h3 className="text-xl font-bold text-slate-900">
+        {title}
+      </h3>
+
+      <p className="mt-4 text-sm leading-7 text-slate-600">
+        {description}
+      </p>
+
+      <div className="mt-6 space-y-4">
+        {points.map((point) => (
+          <div
+            key={point}
+            className="flex items-start gap-3 text-sm text-slate-600"
+          >
+            <span className="mt-0.5 font-bold text-emerald-500">
+              ✓
+            </span>
+
+            <span>{point}</span>
+          </div>
+        ))}
+      </div>
+
+      <button
+        onClick={onClick}
+        className={`mt-auto pt-7 text-left text-sm font-bold ${buttonColor} transition hover:opacity-70`}
+      >
+        {button} →
+      </button>
+
+    </div>
+  );
+}
+
+
+function Step({ number, icon, title, text }) {
+  return (
+    <div className="relative rounded-xl border border-slate-200 bg-white p-7 shadow-sm">
+
+      <div className="mb-5 flex items-center justify-between">
+        <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-blue-50 text-xl">
+          {icon}
         </div>
 
-        {/* Footer */}
-        <p
-          style={{
-            marginTop: 56,
-            fontSize: 11,
-            color: 'var(--text-muted)',
-            fontFamily: 'var(--font-mono)',
-            textAlign: 'center',
-          }}
-        >
-          GitPulse AI • Amazon Developer Hackathon 2026 • Model Context Protocol SDK • React + Vite
-        </p>
+        <span className="font-mono text-xs font-bold text-slate-300">
+          {number}
+        </span>
+      </div>
+
+      <h3 className="text-lg font-bold text-slate-900">
+        {title}
+      </h3>
+
+      <p className="mt-2 text-sm leading-6 text-slate-500">
+        {text}
+      </p>
+
+    </div>
+  );
+}
+
+
+function Check({ text }) {
+  return (
+    <div className="flex items-start gap-3">
+      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-xs font-bold text-emerald-600">
+        ✓
+      </span>
+
+      <span className="text-sm text-slate-600">
+        {text}
+      </span>
+    </div>
+  );
+}
+
+
+function ScoreBar({ label, value }) {
+  return (
+    <div>
+      <div className="mb-1.5 flex justify-between text-xs">
+        <span className="font-medium text-slate-600">
+          {label}
+        </span>
+
+        <span className="font-bold text-blue-600">
+          {value}
+        </span>
+      </div>
+
+      <div className="h-2 overflow-hidden rounded-full bg-slate-100">
+        <div
+          className="h-full rounded-full bg-gradient-to-r from-blue-500 to-indigo-500"
+          style={{ width: `${value}%` }}
+        />
+      </div>
+    </div>
+  );
+}
+
+
+function MiniStat({ value, label }) {
+  return (
+    <div className="rounded-lg bg-slate-50 p-3 text-center">
+      <div className="text-sm font-bold text-slate-900">
+        {value}
+      </div>
+
+      <div className="mt-1 text-[10px] text-slate-400">
+        {label}
       </div>
     </div>
   );
