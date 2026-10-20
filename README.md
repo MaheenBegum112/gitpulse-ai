@@ -18,8 +18,6 @@ The platform combines the **Model Context Protocol (MCP)** with **Amazon Bedrock
 ---
 
 ## 🚀 Features
-## FEATURES
-
 ### For Repository Developers
 
 - **Repository Health Analysis**
