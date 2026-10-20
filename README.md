@@ -1,115 +1,188 @@
 # ⚡ GitPulse AI
-### *Next-Generation Repository Health & AWS Cloud Readiness Intelligence powered by Model Context Protocol (MCP) & Amazon Bedrock*
 
-Built for the **Amazon Developer Hackathon 2026** 🏆
+> AI-powered GitHub repository intelligence platform for health analysis, predictive insights, repository comparison, and AWS cloud-readiness.
 
----
+## 📌 Overview
 
-## 🌟 Executive Summary
+GitPulse AI is an AI-powered GitHub repository intelligence platform that goes beyond basic GitHub metrics. It analyzes repository health, contributor activity, issues, pull requests, documentation, and codebase maturity to generate actionable engineering insights.
 
-**GitPulse AI** transforms open-source repository analysis from simple vanity metrics (stars and forks) into **actionable engineering intelligence**. By fusing the **Model Context Protocol (MCP)** with **Amazon Bedrock AI inference**, GitPulse AI delivers real-time health grading, predictive risk forecasting, side-by-side repository benchmarking, and automated **AWS Well-Architected 5-Pillar cloud readiness audits**.
-
----
-
-## 🚀 Key Features That Stand Out
-
-### 1. 🧠 Multi-Factor Health Score Algorithm
-Unlike basic GitHub analyzers that rely on hardcoded thresholds, GitPulse AI calculates a weighted **100-point Health Score** across 7 dimensions:
-* **Commit Frequency (25%)**: Recency and velocity of code pushes over 30/90-day sliding windows.
-* **Contributor Diversity & Bus Factor (20%)**: Mathematical distribution of commits to identify single-maintainer vulnerabilities.
-* **Issue Management (15%)**: Ratio of active vs stale issues and triage turnaround.
-* **PR Review Culture (15%)**: Merge speed and review responsiveness.
-* **Documentation Hygiene (10%)**: Verification of README depth, LICENSE, Wiki, and topic tagging.
-* **Community Engagement (10%)**: Logarithmic growth trajectory of stars, forks, and watchers.
-* **Codebase Maturity (5%)**: Polyglot diversity, release cadence, and repository longevity.
-
-### 2. ☁️ Amazon Bedrock Architecture & AWS Well-Architected Audit
-Specifically architected for the Amazon Developer Hackathon:
-* **AWS 5-Pillars Scorecard**: Evaluates codebases against Operational Excellence, Security, Reliability, Performance Efficiency, and Cost/Sustainability.
-* **Target Cloud Topology Advisor**: Recommends optimal AWS deployment architectures (AWS Serverless Lambda + API Gateway vs. AWS App Runner vs. ECS Fargate on AWS Graviton4).
-* **Interactive "Ask Bedrock" Advisor**: In-browser architectural consultation powered by Anthropic Claude 3.5 Sonnet and Amazon Nova on Amazon Bedrock.
-
-### 3. 🔮 Predictive Intelligence Engine
-Anticipates codebase risks before they impact downstream projects:
-* 🚨 **Abandonment Risk Detector**: Detects dormancy cycles and decelerating maintenance velocity.
-* 👤 **Bus Factor Risk Warning**: Flags repositories where a single contributor accounts for >70% of contributions.
-* 📈 **Momentum Indicator**: Identifies projects experiencing explosive developer adoption.
-* ⏰ **Optimal Contribution Timing**: Analyzes commit timestamps to determine maintainer availability windows.
-
-### 4. ⚡ Model Context Protocol (MCP) Live Inspector & Gateway
-Fully implements the **Anthropic & Linux Foundation Model Context Protocol (MCP)** standard:
-* **Stdio Transport**: Seamlessly connects to desktop AI environments (Claude Desktop, Cursor, Antigravity IDE).
-* **HTTP/JSON-RPC 2.0 Gateway**: Exposes port `3001` with CORS support for browser frontends and cloud microservices.
-* **In-App Protocol Inspector**: Inspect registered tools (`analyze-repo-health`, `get-repo-languages`, `get-contributor-stats`, `compare-repos`, `aws-well-architected-audit`), edit arguments in real time, and inspect raw JSON-RPC 2.0 payloads.
-
-### 5. 🆚 Repository Comparison Benchmarking
-Direct side-by-side comparative analysis of competing repositories (e.g., `facebook/react` vs `vuejs/core` or `expressjs/express` vs `fastify/fastify`) with automatic category winner badges.
-
-### 6. 📋 One-Click Shareable Reports
-Export formatted markdown and executive summaries to clipboard or download for architecture reviews.
+The platform combines the **Model Context Protocol (MCP)** with **Amazon Bedrock** to provide repository analysis, predictive risk detection, repository comparison, and AWS Well-Architected cloud-readiness recommendations.
 
 ---
 
-## 🏛️ System Architecture
+## 🎥 Demo
 
-```mermaid
-graph TD
-    Client["🎨 GitPulse Frontend\n(React 19 + Vite + Glassmorphism UI)"]
-    MCP_Inspector["⚡ Live MCP Inspector\n(JSON-RPC 2.0 Protocol Stream)"]
-    Backend["🔌 MCP Server & HTTP Gateway\n(Node.js / Express / Stdio + Port 3001)"]
-    GH_API["🐙 GitHub REST API v3\n(Commits, PRs, Issues, Contributors, Releases)"]
-    Bedrock["☁️ Amazon Bedrock Inference Engine\n(Claude 3.5 Sonnet / Amazon Nova Pro)"]
-    Audit_Engine["🏛️ AWS Well-Architected Engine\n(5-Pillar Cloud Readiness Scoring)"]
+[![GitPulse AI Demo](YOUR_THUMBNAIL_URL)](YOUR_YOUTUBE_URL)
 
-    Client --> MCP_Inspector
-    Client -->|HTTP JSON-RPC 2.0 / REST| Backend
-    Client -->|Direct Parallel Fallback| GH_API
-    Backend -->|ghFetch Parallel Pipeline| GH_API
-    Client --> Audit_Engine
-    Audit_Engine --> Bedrock
-    Backend -->|analyze-repo-health & aws-audit| Bedrock
-```
+> Watch the demo to see repository health analysis, predictive insights, MCP tools, repository comparison, and AWS cloud-readiness analysis in action.
 
 ---
 
-## 🛠️ MCP Tools Implemented
+## 🚀 Features
 
-| Tool Name | Parameters | Purpose |
-| :--- | :--- | :--- |
-| `analyze-repo-health` | `{ owner, repo }` | Full multi-factor health analysis & predictive insights |
-| `get-repo-languages` | `{ owner, repo }` | Language breakdown and byte percentages |
-| `get-contributor-stats` | `{ owner, repo }` | Contributor distribution and bus-factor analysis |
-| `compare-repos` | `{ ownerA, repoA, ownerB, repoB }` | Side-by-side health comparison |
-| `aws-well-architected-audit` | `{ owner, repo }` | AWS 5-Pillar cloud readiness evaluation & Bedrock advice |
+### 🧠 Repository Health Analysis
+
+- Multi-factor **100-point repository health score**
+- Commit frequency and repository activity analysis
+- Contributor diversity and bus-factor analysis
+- Issue and pull-request activity analysis
+- Documentation quality analysis
+- Community engagement analysis
+- Codebase maturity evaluation
+
+### 🔮 Predictive Intelligence
+
+- Abandonment risk detection
+- Bus-factor risk warnings
+- Repository momentum analysis
+- Contributor activity patterns
+- Optimal contribution timing insights
+
+### ☁️ AWS & AI Analysis
+
+- AWS Well-Architected **5-Pillar** evaluation
+- Operational Excellence
+- Security
+- Reliability
+- Performance Efficiency
+- Cost Optimization / Sustainability
+- AWS architecture recommendations
+- AI-powered recommendations using Amazon Bedrock
+- Interactive AI architecture advisor
+
+### ⚡ MCP Integration
+
+- Model Context Protocol (MCP) server
+- Stdio transport
+- HTTP/JSON-RPC 2.0 gateway
+- In-app MCP protocol inspector
+- Real-time tool and JSON-RPC payload inspection
+- Compatible with MCP-enabled AI environments
+
+### 🆚 Repository Comparison
+
+Compare two GitHub repositories side-by-side based on:
+
+- Repository health
+- Contributors
+- Languages
+- Activity
+- Community metrics
+- Overall project maturity
+
+### 📋 Shareable Reports
+
+- Generate repository analysis reports
+- Export reports as Markdown
+- Copy executive summaries
+- Share analysis results easily
 
 ---
 
-## 🚀 Quickstart & Local Setup
+## 🛠️ Tech Stack
+
+### Frontend
+
+- React 19
+- Vite
+- JavaScript
+- CSS
+- Recharts
+
+### Backend
+
+- Node.js
+- Express.js
+- Model Context Protocol (MCP)
+- JSON-RPC 2.0
+
+### AI
+
+- Amazon Bedrock
+- Anthropic Claude
+- Amazon Nova
+
+### APIs
+
+- GitHub REST API
+
+### Development Tools
+
+- Git
+- GitHub
+- npm
+
+---
+
+## 📦 Installation
 
 ### Prerequisites
-* Node.js v18+ or v20+
-* npm or pnpm
 
-### 1. Start the Frontend
-```bash
+Make sure you have installed:
+
+- Node.js 18+ or 20+
+- npm
+
+### 1. Clone the repository
+
+git clone https://github.com/MaheenBegum112/gitpusle-ai.git
+
+cd gitpusle-ai
+2. Install Frontend Dependencies
 cd frontend
 npm install
+3. Start the Frontend
 npm run dev
-```
-*Frontend runs on `http://localhost:5173`*
 
-### 2. Start the MCP Backend & HTTP Gateway (Optional)
-```bash
+The frontend will run at:
+
+http://localhost:5173
+4. Install Backend Dependencies
+
+Open a new terminal:
+
 cd backend
 npm install
+5. Start the Backend
 npm start
-```
-*MCP Gateway listens on `http://localhost:3001` (and supports Stdio transport for desktop MCP clients).*
+gitpusle-ai/
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   └── ...
+│   │
+│   ├── package.json
+│   └── ...
+│
+├── backend/
+│   ├── src/
+│   │   ├── tools/
+│   │   ├── services/
+│   │   ├── routes/
+│   │   └── ...
+│   │
+│   ├── package.json
+│   └── ...
+│
+├── README.md
+└── LICENSE
+🔐 Environment Variables
 
----
+Create a .env file inside the backend directory
+GITHUB_TOKEN=your_github_token
+AWS_ACCESS_KEY_ID=your_aws_access_key
+AWS_SECRET_ACCESS_KEY=your_aws_secret_key
+AWS_REGION=your_aws_region
 
-## 🏆 Amazon Developer Hackathon Highlights
-* **AWS Integration**: Bedrock AI recommendations, Well-Architected 5-Pillars scoring, Graviton4 cost-efficiency guidance.
-* **Modern AI Standards**: Native Model Context Protocol (MCP) JSON-RPC 2.0 implementation.
-* **Zero-Failure Architecture**: Works seamlessly in both live backend MCP mode and standalone browser-accelerated mode.
-* **Stunning Design Aesthetics**: Obsidian dark-mode palette, glassmorphism blur effects, SVG animated health score rings, dynamic commit heatmaps, and micro-interactions.
+🏆 Highlights
+AI-powered GitHub repository intelligence
+Model Context Protocol integration
+Amazon Bedrock integration
+Predictive repository risk analysis
+AWS Well-Architected cloud-readiness analysis
+Repository benchmarking and comparison
+Interactive MCP inspection
+Modern React-based dashboard
