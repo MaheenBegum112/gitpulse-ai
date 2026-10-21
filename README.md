@@ -118,16 +118,6 @@ node server.js
 
 ---
 
-## 🔐 Environment Variables
-
-Create a `.env` file inside the `backend` directory with the following keys:
-
-```env
-GITHUB_TOKEN=your_github_personal_access_token
-AWS_ACCESS_KEY_ID=your_aws_access_key
-AWS_SECRET_ACCESS_KEY=your_aws_secret_key
-AWS_REGION=us-east-1
-```
 
 ---
 
