@@ -44,7 +44,7 @@ GitPulse AI automates the entire repository auditing pipeline. In seconds, it in
 
 > *🎬 Check out the live application deployment and walkthrough demo video below!*
 
-[![Live App Deployment](https://img.shields.io/badge/Live_App-Vercel_Deployment-blue?style=for-the-badge&logo=vercel)](https://https://gitpusle-ai.vercel.app/)
+[![Live App Deployment](https://img.shields.io/badge/Live_App-Vercel_Deployment-blue?style=for-the-badge&logo=vercel)](https://gitpusle-ai.vercel.app/)
 [![Watch Demo Video](https://img.shields.io/badge/Watch-Demo_Video-red?style=for-the-badge&logo=youtube)](https://youtube.com/your-demo-link)
 
 ---
