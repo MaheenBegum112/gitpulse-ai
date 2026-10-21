@@ -151,3 +151,12 @@ gitpusle-ai/
 │
 ├── README.md                # Project documentation
 └── LICENSE                  # MIT Open Source License
+---
+```
+## 📜 License & Acknowledgments
+
+Distributed under the **MIT License**. See the [LICENSE](LICENSE) file for more information.
+
+<div align="center">
+  <p>Built with ❤️ for the Amazon Developer Hackathon 2026</p>
+</div>
