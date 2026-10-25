@@ -20,6 +20,11 @@
 **GitPulse AI** is an advanced, AI-driven GitHub repository intelligence platform that goes far beyond basic commit counts and star metrics. Designed for developers, engineering teams, and open-source maintainers, it evaluates repository health, contributor activity, issue velocity, and codebase maturity to generate actionable insights. By bridging the **Model Context Protocol (MCP)** with **Amazon Bedrock**, GitPulse AI provides automated architectural audits, predictive risk detection, and comprehensive AWS Well-Architected cloud-readiness recommendations.
 
 ---
+## 🎥 Demo
+<a href="https://youtu.be/yu4sEcYKbBg">
+  <img width="1920" height="915" alt="Screenshot 2026-10-23 220904" src="https://github.com/user-attachments/assets/015f73bf-664b-4d6b-8e86-664152a71ee4" />
+" alt="GitPulse AI Demo" width="100%">
+</a>
 
 ## 🎯 Problem & Solution
 
@@ -40,12 +45,12 @@ GitPulse AI automates the entire repository auditing pipeline. In seconds, it in
 
 ---
 
-## 🎥 Demo
 
-> *🎬 Check out the live application deployment and walkthrough demo video below!*
+
+
 
 [![Live App Deployment](https://img.shields.io/badge/Live_App-Vercel_Deployment-blue?style=for-the-badge&logo=vercel)](https://gitpusle-ai.vercel.app/)
-[![Watch Demo Video](https://img.shields.io/badge/Watch-Demo_Video-red?style=for-the-badge&logo=youtube)](https://youtu.be/yu4sEcYKbBg)
+
 
 ---
 
