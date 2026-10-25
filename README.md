@@ -9,7 +9,7 @@
 [![MCP Protocol](https://img.shields.io/badge/Protocol-Model_Context_Protocol-purple)](https://modelcontextprotocol.io/)
 [![Amazon Bedrock](https://img.shields.io/badge/AI-Amazon_Bedrock-orange)](https://aws.amazon.com/bedrock/)
 
-[Overview](#-overview) • [Problem & Solution](#-problem--solution) • [Uniqueness](#-uniqueness) • [Demo](#-demo) • [Features](#-features) • [Tech Stack & Tools](#️-tech-stack--tools) • [Installation](#-installation) • [Folder Structure](#-folder-structure)
+[Overview](#-overview) •[Demo](#-demo)  • [Problem & Solution](#-problem--solution) • [Uniqueness](#-uniqueness)  •[Live Deployment](#-live-link) • [Features](#-features) • [Tech Stack & Tools](#️-tech-stack--tools) • [Installation](#-installation) • [Folder Structure](#-folder-structure)
 
 </div>
 
