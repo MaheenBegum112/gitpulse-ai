@@ -23,7 +23,7 @@
 ## 🎥 Demo
 <a href="https://youtu.be/yu4sEcYKbBg">
   <img width="1920" height="915" alt="Screenshot 2026-10-23 220904" src="https://github.com/user-attachments/assets/015f73bf-664b-4d6b-8e86-664152a71ee4" />
-" alt="GitPulse AI Demo" width="100%">
+
 </a>
 
 ## 🎯 Problem & Solution
